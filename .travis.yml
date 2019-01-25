@@ -1,0 +1,20 @@
+language: python
+
+python:
+  - '3.6'
+
+before_install:
+  - sudo apt-get install ditaa
+
+install:
+  - pip install pycodestyle
+  # TODO: Install these via tox.ini or something?
+  - pip install delegator.py
+  - pip install pyyaml
+  - pip install tabulate
+
+before_script:
+  - pycodestyle --ignore=E203 markdata
+
+script:
+ - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then python -m unittest discover; fi
