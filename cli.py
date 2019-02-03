@@ -37,8 +37,10 @@ def cli(source, destination, root, directives):
     loaded = {}
     if directives:
         loaded = {
-            name: getattr(importlib.import_module(value + "." + name), "main")
-            for _, name, _ in pkgutil.iter_modules(path=[directives])
+            pkg: getattr(
+                importlib.import_module(directives + "." + pkg), "main"
+            )
+            for _, pkg, _ in pkgutil.iter_modules(path=[directives])
         }
 
     src_p = pathlib.Path(source)
