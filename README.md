@@ -180,6 +180,17 @@ Markdata avoids this problem by acting as more of a "preprocessor" (i.e., `Markd
   <img src ="https://user-images.githubusercontent.com/8785025/52157384-8b1b5780-2643-11e9-83de-828d2e541742.png"/>
 </p>
 
+> What if I'm already using a static site generator (SSG)?
+
+While many SSGs have built-in support for external data sources (e.g., [Jekyll](https://jekyllrb.com/docs/datafiles/), [Hugo](https://gohugo.io/templates/data-templates/), and [Gatsby](https://www.gatsbyjs.org/tutorial/part-four/)), there are still benefits to using Markdata:
+
+- As dicussed in the previous question, Markdata *doesn't* introduce new Markdown syntax&mdash;meaning Markdata directives can be used with *any* SSG that supports Markdown. This means that you can change SSGs without having to update the syntax (i.e., template language) for accessing your data.
+
+- Markdata's ability to manage data is far more powerful than what most SSGs offer: instead of merely iterating over static resource files, you have full access to Python and its library ecosystem. So, for example, you can
+    - fetch data from APIs using the ultra-popular [Requests](http://docs.python-requests.org/en/master/) library;
+    - include plots and diagrams created with [seaborn](https://github.com/mwaskom/seaborn); or
+    - transform data using [pandas](https://github.com/pandas-dev/pandas).
+
 ## Say thanks
 
 Hi!
