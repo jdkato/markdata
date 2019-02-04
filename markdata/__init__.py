@@ -18,6 +18,7 @@ def markdata(file_or_str, directives={}, root=None):
     """Find and compile all block definitions in the file `f_obj`.
     """
     DIRECTIVES.update(directives)
+    called_from = os.getcwd()
 
     # NOTE: Since we accept relative file paths in our directives, we need to
     # operate from within the working director of the Markdown file itself --
@@ -37,4 +38,6 @@ def markdata(file_or_str, directives={}, root=None):
             conv = DIRECTIVES[directive]
             text = text.replace(m.string[m.start() : m.end()], conv(**args), 1)
 
+    # Restore our working directory.
+    os.chdir(called_from)
     return text

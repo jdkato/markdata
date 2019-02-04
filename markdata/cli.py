@@ -2,6 +2,7 @@ import importlib
 import os
 import pathlib
 import pkgutil
+import shutil
 
 import click
 
@@ -29,11 +30,11 @@ def cli(source, destination, root, directives):
 
     Reads from <SOURCE> and writes to <DESTINATION>.
 
-    If <SOURCE> is a directory, all child Markdata files will be converted to
-    Markdown and written to <DESTINATION> (default: overwrite <SOURCE>).
-
     If <SOURCE> is a single file, it will be converted to Markdown and written
     to <DESTINATION> (default: stdout).
+
+    If <SOURCE> is a directory, all child Markdata files will be converted to
+    Markdown and written to <DESTINATION> (default: overwrite <SOURCE>).
     """
     loaded = {}
     if directives:
@@ -45,20 +46,23 @@ def cli(source, destination, root, directives):
     src_p = pathlib.Path(source)
     src_d = src_p.is_dir()
 
+    if src_d and destination:
+        shutil.copytree(source, destination)
+        src_p = pathlib.Path(destination)
+
     files = src_p.glob("**/*.md") if src_d else [src_p]
     for src in files:
-        if src_d and destination:
-            dest = src_p.resolve().replace(src_p.name, destination)
-        elif src_d:
-            dest = src_p.name
-        else:
-            dest = destination
-
         with src.open() as f:
             markdown = markdata(f, loaded, root)
 
-        if dest:
-            with open(dest, "w+") as f:
+        if src_d:
+            # We're working on a directory.
+            with src.open("w+") as f:
+                f.write(markdown)
+        elif destination:
+            # We were given a single-file destination.
+            with open(destination, "w+") as f:
                 f.write(markdown)
         else:
+            # stdin (single file default).
             click.echo(markdown)
