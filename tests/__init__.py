@@ -3,6 +3,7 @@ import unittest
 
 from markdata import markdata
 
+from .block import callout
 from .ditaa import ditaa
 from .output import output
 
@@ -18,7 +19,12 @@ class ReadTestCase(unittest.TestCase):
             out = f.parent / "output.md"
             with f.open() as data:
                 markdown = markdata(
-                    data, directives={"output": output, "ditaa": ditaa}
+                    data,
+                    directives={
+                        "output": output,
+                        "ditaa": ditaa,
+                        "callout": callout,
+                    },
                 )
             self.assertMultiLineEqual(markdown, out.read_text())
 

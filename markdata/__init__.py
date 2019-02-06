@@ -8,9 +8,16 @@ from .directives import DIRECTIVES
 #
 #    `directive{<arguments>}`
 #
+# OR
+#
+#    ```directive{<arguments>}
+#    <content>
+#    ```
+#
 # Where 'directive' is a Python function.
 DEFINITIONS = re.compile(
-    r"`(?P<directive>[\w_]+)(?P<arguments>\{.*?\})`", re.DOTALL | re.VERBOSE
+    r"(?:``)?`(?P<directive>[\w_]+)(?P<arguments>\{.*?\})(?:\n(?P<content>.+)\n``)?`",
+    re.DOTALL | re.VERBOSE,
 )
 
 
@@ -36,7 +43,13 @@ def markdata(file_or_str, directives={}, root=None):
         if directive in DIRECTIVES:
             args = ast.literal_eval(groups[1])
             conv = DIRECTIVES[directive]
-            text = text.replace(m.string[m.start() : m.end()], conv(**args), 1)
+            if groups[2] is None:
+                # Inline directive:
+                value = conv(**args)
+            else:
+                # Block directive:
+                value = conv(groups[2], **args)
+            text = text.replace(m.string[m.start() : m.end()], value, 1)
 
     # Restore our working directory.
     os.chdir(called_from)

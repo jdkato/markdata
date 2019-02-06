@@ -7,9 +7,10 @@ def my_component(doc):
         print("This is a pretty short document.")
     return doc
 
-nlp = spacy.load('en')
-nlp.add_pipe(my_component, name='print_info', first=True)
-print(nlp.pipe_names)  # ['print_info', 'tagger', 'parser', 'ner']
-doc = nlp(u"This is a sentence.")
 
-assert nlp.pipe_names == ['print_info', 'tagger', 'parser', 'ner']
+nlp = spacy.load("en")
+nlp.add_pipe(my_component, name="print_info", first=True)
+print(nlp.pipe_names)  # ['print_info', 'tagger', 'parser', 'ner']
+doc = nlp("This is a sentence.")
+
+assert nlp.pipe_names == ["print_info", "tagger", "parser", "ner"]
