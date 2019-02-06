@@ -24,7 +24,7 @@ def _read(path, parse=False):
     """Read the contents of the given file.
     """
     _, ext = os.path.splitext(path)
-    with open(os.path.abspath(path), 'r') as f:
+    with open(os.path.abspath(path), "r") as f:
         if parse:
             data = _parse(f, ext)
         else:

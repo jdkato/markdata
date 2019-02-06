@@ -15,7 +15,7 @@ install:
   - pip install click
 
 before_script:
-  - pycodestyle --ignore=E203 markdata
+  - pycodestyle --ignore=E203,W503 markdata
 
 script:
  - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then python -m unittest discover; fi
