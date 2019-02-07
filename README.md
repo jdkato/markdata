@@ -25,7 +25,10 @@ $ pip install markdata
 ```python
 import markdata
 
-markdown = markdata.markdata(file_or_str)
+def my_directive():
+    pass
+
+markdown = markdata.markdata(file_or_str, directives={"name": my_directive})
 ```
 
 ###### From the command line
@@ -53,13 +56,21 @@ Options:
 
 ## Directives
 
-Markdata's functionality is driven by *directives*, which are inline Markdown snippets that invoke Python functions.
+Markdata's functionality is driven by *directives*, which are Markdown snippets that invoke Python functions. Directives can be defined in two ways:
 
-Here's an example:
+````markdown
+# Example directives
 
-```markdown
-`table{'path': '../data/table.yml', 'classes': ['table'], 'caption': 'My data'}`
+<!-- This is a "block" directive -->
+
+```callout{'title': 'NOTE', 'classes': ['warning']}
+This is a callout message.
 ```
+
+<!-- This is an "inline" directive -->
+
+`table{'path': '../data/table.yml', 'classes': ['table'], 'caption': 'My data'}`
+````
 
 The `table` directive creates an HTML table from a YAML, JSON, or CSV file (with an optional caption and classes). After calling `markdata` on this file, the output would be something along the lines of:
 
@@ -122,9 +133,9 @@ While `table` and `document` attempt to solve the most common needs, the true po
 
 There are three steps to creating a directive:
 
-1. Design your *directive definition*:  A directive definition is an inline markup snippet that adheres to the pattern ``` `(?P<directive>\w+)(?P<arguments>\{.*?\})` ```. It includes the name (capture group 1) and the arguments (capture group 2). The only syntatic restriction is that `arguments` needs to be a valid [Python dictionary](https://docs.python.org/3.7/tutorial/datastructures.html#dictionaries).
+1. Design your *directive definition*:  Choose either an inline or block directive and decide what arguments it'll accept.
 
-2. Write a Python function: This function needs to accept the arguments defined in step (1). So, if you were re-implementing the built-in `table` directive, you'd have a directive definition of `table{'path': '../data/table.yml', 'classes': ['table'], 'caption': 'My data'}` and a function defintion of `table(path: str, classes: List[str] = [], caption: str = "") -> str:`.
+2. Write a Python function: This function needs to accept the arguments defined in step (1). So, if you were re-implementing the built-in `table` directive, you'd have a directive definition of `table{'path': '../data/table.yml', 'classes': ['table'], 'caption': 'My data'}` and a function defintion of `table(path: str, classes: List[str] = [], caption: str = "") -> str:`. When using block directives, the first argument passed to the backend function is its content (see our [admonition example](https://github.com/errata-ai/markdata/blob/master/tests/block/__init__.py)).
 
 3. Associate your directive with your function:
 
@@ -139,7 +150,7 @@ There are three steps to creating a directive:
 
     markdown = markdata.markdata(file_or_str, directives={'directive': implementation})
     ```
-    - Using the command-line tool: the CLI tool follows ["naming convention"](https://packaging.python.org/guides/creating-and-discovering-plugins/#using-naming-convention) discovery method. Markdata will associate all `markdata_{directive_name}.py` modules with their `main` function.
+    - Using the command-line tool: Markdata will associate all Python modules with their `main` function found in the   directory passed to `--directives='my_dir'`.
 
 Check out [our test cases](https://github.com/errata-ai/Markdata/tree/master/tests) for some examples.
 
