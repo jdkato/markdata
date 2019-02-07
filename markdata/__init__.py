@@ -17,7 +17,7 @@ from .directives import DIRECTIVES
 # Where 'directive' is a Python function.
 DEFINITIONS = re.compile(
     r"(?:``)?`(?P<directive>[\w_]+)(?P<arguments>\{.*?\})"
-    + r"(?:\n(?P<content>.+)\n``)?`",
+    + r"(?:\n(?P<content>.+?)\n``)?`",
     re.DOTALL | re.VERBOSE,
 )
 
