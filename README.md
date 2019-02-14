@@ -142,7 +142,7 @@ The `document` directive includes the content of an external text file (of any t
 
 ### Writing your own
 
-> **NOTE**: The argument passed to custom directives will be a dictionary created from the file's front matter (`{}` by default).
+> **NOTE**: The first argument passed to custom directives will be a dictionary created from the file's front matter (`{}` by default).
 
 While `table` and `document` attempt to solve the most common needs, the true power of Markdata comes from leveraging Python in *your own* directives.
 
