@@ -28,7 +28,18 @@ import markdata
 def my_directive():
     pass
 
-markdown = markdata.markdata(file_or_str, directives={"name": my_directive})
+markdown = markdata.markdata(
+    # A string or file-like object.
+    file_or_str,
+    # A dictionary of custom directives (optional).
+    #
+    # Format: {'name': my_directive}.
+    directives={},
+    # The type of front matter to parse (optional).
+    fm_format=None,  # 'JSON', 'YAML', or 'TOML'
+    # The directory that paths will be resolved relative to (optional).
+    root=None
+)
 ```
 
 ###### From the command line
@@ -41,17 +52,19 @@ Usage: markdata [OPTIONS] SOURCE [DESTINATION]
 
   Reads from <SOURCE> and writes to <DESTINATION>.
 
-  If <SOURCE> is a directory, all child Markdata files will be converted to
-  Markdown and written to <DESTINATION> (default: overwrite <SOURCE>).
-
   If <SOURCE> is a single file, it will be converted to Markdown and written
   to <DESTINATION> (default: stdout).
 
+  If <SOURCE> is a directory, all child Markdata files will be converted to
+  Markdown and written to <DESTINATION> (default: overwrite <SOURCE>).
+
 Options:
-  --root PATH        The directory that paths will be resolved relative to.
-  --directives PATH  The directory containing your custom directives.
-  --version          Show the version and exit.
-  --help             Show this message and exit.
+  --fm-type [JSON|YAML|TOML]  The type of front matter to parse.
+  --root PATH                 The directory that paths will be resolved
+                              relative to.
+  --directives PATH           The directory containing your custom directives.
+  --version                   Show the version and exit.
+  --help                      Show this message and exit.
 ```
 
 ## Directives
@@ -129,13 +142,15 @@ The `document` directive includes the content of an external text file (of any t
 
 ### Writing your own
 
+> **NOTE**: The argument passed to custom directives will be a dictionary created from the file's front matter (`{}` by default).
+
 While `table` and `document` attempt to solve the most common needs, the true power of Markdata comes from leveraging Python in *your own* directives.
 
 There are three steps to creating a directive:
 
 1. Design your *directive definition*:  Choose either an inline or block directive and decide what arguments it'll accept.
 
-2. Write a Python function: This function needs to accept the arguments defined in step (1). So, if you were re-implementing the built-in `table` directive, you'd have a directive definition of `table{'path': '../data/table.yml', 'classes': ['table'], 'caption': 'My data'}` and a function defintion of `table(path: str, classes: List[str] = [], caption: str = "") -> str:`. When using block directives, the first argument passed to the backend function is its content (see our [admonition example](https://github.com/errata-ai/markdata/blob/master/tests/block/__init__.py)).
+2. Write a Python function: This function needs to accept the arguments defined in step (1). So, if you were re-implementing the built-in `table` directive, you'd have a directive definition of `table{'path': '../data/table.yml', 'classes': ['table'], 'caption': 'My data'}` and a function definition of `table(fm: Dict, path: str, classes: List[str] = [], caption: str = "") -> str:`. When using block directives, the first argument passed to the backend function is its content (see our [admonition example](https://github.com/errata-ai/markdata/blob/master/tests/block/__init__.py)).
 
 3. Associate your directive with your function:
 

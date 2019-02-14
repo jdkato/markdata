@@ -13,6 +13,12 @@ from markdata import markdata, __version__
 @click.argument("source", type=click.Path(exists=True))
 @click.argument("destination", type=click.Path(), required=False)
 @click.option(
+    "--fm-type",
+    type=click.Choice(["JSON", "YAML", "TOML"]),
+    default=None,
+    help="The type of front matter to parse.",
+)
+@click.option(
     "--root",
     type=click.Path(exists=True),
     default=None,
@@ -25,7 +31,7 @@ from markdata import markdata, __version__
     help="The directory containing your custom directives.",
 )
 @click.version_option(version=__version__.__version__)
-def cli(source, destination, root, directives):
+def cli(source, destination, fm_type, root, directives):
     """A flavor-agnostic extension framework for Markdown.
 
     Reads from <SOURCE> and writes to <DESTINATION>.
@@ -53,7 +59,7 @@ def cli(source, destination, root, directives):
     files = src_p.glob("**/*.md") if src_d else [src_p]
     for src in files:
         with src.open() as f:
-            markdown = markdata(f, loaded, root)
+            markdown = markdata(f, loaded, fm_type, root)
 
         if src_d:
             # We're working on a directory.
