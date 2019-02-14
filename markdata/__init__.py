@@ -2,6 +2,9 @@ import ast
 import os
 import re
 
+import frontmatter
+
+from frontmatter.default_handlers import YAMLHandler, TOMLHandler, JSONHandler
 from .directives import DIRECTIVES
 
 # Block definitions adhere to the following structure:
@@ -21,9 +24,29 @@ DEFINITIONS = re.compile(
     re.DOTALL | re.VERBOSE,
 )
 
+HANDLERS = {"YAML": YAMLHandler, "TOML": TOMLHandler, "JSON": JSONHandler}
 
-def markdata(file_or_str, directives={}, root=None):
-    """Find and compile all block definitions in the file `f_obj`.
+
+def read_data(file_or_str, fm_format):
+    """Read the given buffer (`file_or_str`).
+    """
+    data = {}
+    if hasattr(file_or_str, "read"):
+        text = file_or_str.read()
+    elif hasattr(file_or_str, "read_text"):
+        text = file_or_str.read_text()
+    else:
+        text = file_or_str
+
+    fmt_handler = HANDLERS.get(fm_format)
+    if fmt_handler:
+        data, _ = frontmatter.parse(text)
+
+    return text, data
+
+
+def markdata(file_or_str, directives={}, fm_format=None, root=None):
+    """Find and compile all block definitions in `file_or_str`.
     """
     DIRECTIVES.update(directives)
     called_from = os.getcwd()
@@ -36,7 +59,7 @@ def markdata(file_or_str, directives={}, root=None):
     elif hasattr(file_or_str, "name") and file_or_str.name != "<stdin>":
         os.chdir(os.path.dirname(os.path.abspath(file_or_str.name)))
 
-    text = file_or_str.read() if hasattr(file_or_str, "read") else file_or_str
+    text, data = read_data(file_or_str, fm_format)
     for m in DEFINITIONS.finditer(text):
         groups = m.groups()
 
@@ -46,10 +69,10 @@ def markdata(file_or_str, directives={}, root=None):
             conv = DIRECTIVES[directive]
             if groups[2] is None:
                 # Inline directive:
-                value = conv(**args)
+                value = conv(data, **args)
             else:
                 # Block directive:
-                value = conv(groups[2], **args)
+                value = conv(data, groups[2], **args)
             text = text.replace(m.string[m.start() : m.end()], value, 1)
 
     # Restore our working directory.

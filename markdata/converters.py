@@ -1,7 +1,6 @@
 import tabulate
 
 from functools import partial
-from typing import List
 
 
 def _html_row_with_attrs(celltag, cell_values, colwidths, colaligns):
@@ -22,9 +21,7 @@ def _html_row_with_attrs(celltag, cell_values, colwidths, colaligns):
     return rowhtml
 
 
-def to_html_table(
-    rows: List[List[str]], caption: str = "", classes: List[str] = []
-) -> str:
+def to_html_table(rows, caption="", classes=[]):
     """Convert the given rows into an HTML table.
 
     The first entry in `rows` will be used as the table headers.

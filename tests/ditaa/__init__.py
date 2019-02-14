@@ -3,7 +3,7 @@ import subprocess
 import tempfile
 
 
-def ditaa(path: str, alt: str = "") -> str:
+def ditaa(fm, path, alt=""):
     """Example directive for including an exteranlly-generated image.
     """
     if alt:

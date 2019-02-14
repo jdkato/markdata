@@ -6,7 +6,6 @@ import os
 
 import yaml
 
-from typing import List, Tuple
 from .converters import to_html_table
 
 DIRECTIVES = {}
@@ -44,7 +43,7 @@ def _parse(data, ext):
 
 
 @DIRECTIVE
-def table(path: str, classes: List[str] = [], caption: str = "") -> str:
+def table(front_matter, path, classes=[], caption=""):
     """Return an HTML table built from structured data (CSV, JSON, or YAML).
 
     `path` [required]: A path (relative to the directive-containing file) to a
@@ -66,7 +65,7 @@ def table(path: str, classes: List[str] = [], caption: str = "") -> str:
 
 
 @DIRECTIVE
-def document(path: str, span: Tuple[int, int] = []) -> str:
+def document(front_matter, path, span=[]):
     """Return the contents of a document (or part of it).
 
     `path` [required]: A path (relative to the directive-containing file) to a
