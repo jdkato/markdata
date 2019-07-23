@@ -39,7 +39,7 @@ def _parse(data, ext):
     elif ext in (".yml", ".yaml"):
         return yaml.load(data)
     elif ext == ".csv":
-        return csv.DictReader(data)
+        return list(csv.DictReader(data))
 
 
 @DIRECTIVE
