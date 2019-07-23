@@ -1,6 +1,6 @@
 # Markdata: Keep your data out of your markup!
 
-[![Build Status](https://img.shields.io/travis/errata-ai/vale/master.svg?logo=travis)](https://travis-ci.org/errata-ai/markdata) ![PyPI](https://img.shields.io/pypi/v/markdata.svg?colorB=blue&style=flat) [![wheels](https://img.shields.io/badge/wheels-%E2%9C%93-4c1.svg?longCache=true&logo=python&logoColor=white)](https://pypi.org/project/markdata/#files) [![code style](https://img.shields.io/badge/code%20style-black-%23000.svg)](https://black.readthedocs.io/en/stable/) [![Thanks](https://img.shields.io/badge/say-thanks-ff69b4.svg?logo=gratipay&amp;logoColor=white)](#say-thanks)
+[![Build Status](https://img.shields.io/travis/errata-ai/vale/master.svg?logo=travis)](https://travis-ci.org/errata-ai/markdata) ![PyPI](https://img.shields.io/pypi/v/markdata.svg?colorB=blue&style=flat) [![wheels](https://img.shields.io/badge/wheels-%E2%9C%93-4c1.svg?longCache=true&logo=python&logoColor=white)](https://pypi.org/project/markdata/#files) [![code style](https://img.shields.io/badge/code%20style-black-%23000.svg)](https://black.readthedocs.io/en/stable/)
 
 **Markdata** is a Python library and command-line tool for managing data (e.g., code, diagrams, tables, etc.) in Markdown files. Its goal is to promote one simple rule: prose and non-prose supplements (collectively referred to as "data") should be managed separately whenever possible. The benefits of this philosophy include:
 
@@ -218,15 +218,3 @@ While many SSGs have built-in support for external data sources (e.g., [Jekyll](
     - fetch data from APIs using the ultra-popular [Requests](http://docs.python-requests.org/en/master/) library;
     - include plots and diagrams created with [seaborn](https://github.com/mwaskom/seaborn); or
     - transform data using [pandas](https://github.com/pandas-dev/pandas).
-
-## Say thanks
-
-Hi!
-
-My name is [Joseph Kato](https://github.com/jdkato).
-
-In my spare time, I develop and maintain a few [open-source tools](https://github.com/errata-ai) for collaborative writing.
-
-If you'd like to support my work, you can donate via [Square's Cash App](https://cash.me/$jdkato) or make use of my documentation-related [consulting services](https://errata.ai/about/). Alternatively, I'd greatly appreciate a simple note explaining how you're using my software (which you can send via the ['Say Thanks' project](https://saythanks.io/to/jdkato)).
-
-I appreciate the support! _Thank you!_
