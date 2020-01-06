@@ -3,6 +3,7 @@
 import csv
 import json
 import os
+import textwrap
 
 import yaml
 
@@ -81,3 +82,31 @@ def document(front_matter, path, span=[]):
     if span:
         text = "\n".join(text.splitlines()[span[0] - 1 : span[1]])
     return text
+
+
+@DIRECTIVE
+def code(front_matter, path, span=[], lang=None):
+    """Return the contents of a document (or part of it) as a code block.
+
+    `path` [required]: A path (relative to the directive-containing file) to a
+           local file.
+
+    `span` [optional]: A tuple ([begin, end]) indicating the beginning and
+           ending line of the snippet (defaults to the entire file).
+
+    `lang` [optional]: The code block's info string. If not defined, it will be
+           inferred from the given file extension.
+
+    Example:
+        `code{'path': 'my_file.py', 'span': [10, 13], 'lang': 'python'}`
+    """
+    text = DIRECTIVES["document"](front_matter, path, span)
+
+    if lang is None:
+        lang = os.path.splitext(path)[1]
+
+    return textwrap.dedent("""
+    ```{lang}
+    {text}
+    ```
+    """).format(lang=lang, text=text).strip()

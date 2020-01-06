@@ -140,7 +140,27 @@ def document(path: str, span: Tuple[int, int] = []) -> str:
     """
 ```
 
-The `document` directive includes the content of an external text file (of any type&mdash;Markdown, Python, etc.). This allows you to, for example, write your code examples in their own files (which can be properly tested and linted).
+The `document` directive includes the content of an external text file (of any type&mdash;Markdown, Python, etc.).
+
+```python
+def code(front_matter, path, span=[], lang=None):
+    """Return the contents of a document (or part of it) as a code block.
+
+    `path` [required]: A path (relative to the directive-containing file) to a
+           local file.
+
+    `span` [optional]: A tuple ([begin, end]) indicating the beginning and
+           ending line of the snippet (defaults to the entire file).
+
+    `lang` [optional]: The code block's info string. If not defined, it will be
+           inferred from the given file extension.
+
+    Example:
+        `code{'path': 'my_file.py', 'span': [10, 13], 'lang': 'python'}`
+    """
+```
+
+The `code` directive includes the content of an external source code formatted as a [fenced code block](https://spec.commonmark.org/0.29/#fenced-code-blocks). This allows you to, for example, write your code examples in their own files (which can be properly tested and linted).
 
 ### Writing your own
 
