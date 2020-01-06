@@ -103,7 +103,7 @@ The `table` directive creates an HTML table from a YAML, JSON, or CSV file (with
 
 ### Built-in directives
 
-Markdata has two built-in, general-purpose directives:
+Markdata has a few built-in, general-purpose directives:
 
 ```python
 def table(path: str, classes: List[str] = [], caption: str = "") -> str:
