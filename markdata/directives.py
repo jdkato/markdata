@@ -81,7 +81,7 @@ def document(front_matter, path, span=[]):
     text = _read(path)
     if span:
         text = "\n".join(text.splitlines()[span[0] - 1 : span[1]])
-    return text
+    return textwrap.dedent(text)
 
 
 @DIRECTIVE
