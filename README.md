@@ -10,7 +10,7 @@
 
 - Human-friendly markup: less non-prose content means shorter files, which are easier to update and maintain.
 
-See [*Fixing Markdown’s shortcomings with Python*](https://medium.com/@jdkato/fixing-markdowns-shortcomings-with-python-cf1d31450e56) for more information.
+See [*Fixing Markdown’s shortcomings with Python*](https://staticschool.com/blog/fixing-markdowns-shortcomings-with-python/) for more information.
 
 ## Installation
 
