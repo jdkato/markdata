@@ -1,6 +1,6 @@
 # Markdata: Keep your data out of your markup!
 
-[![Build Status](https://img.shields.io/travis/errata-ai/vale/master.svg?logo=travis)](https://travis-ci.org/jdkato/markdata) [![PyPI](https://img.shields.io/pypi/v/markdata.svg?colorB=blue&style=flat)](https://pypi.org/project/markdata/) [![wheels](https://img.shields.io/badge/wheels-%E2%9C%93-4c1.svg?longCache=true&logo=python&logoColor=white)](https://pypi.org/project/markdata/#files) [![code style](https://img.shields.io/badge/code%20style-black-%23000.svg)](https://black.readthedocs.io/en/stable/)
+[![Build Status](https://img.shields.io/travis/jdkato/markdata/master.svg?logo=travis)](https://travis-ci.org/jdkato/markdata) [![PyPI](https://img.shields.io/pypi/v/markdata.svg?colorB=blue&style=flat)](https://pypi.org/project/markdata/) [![wheels](https://img.shields.io/badge/wheels-%E2%9C%93-4c1.svg?longCache=true&logo=python&logoColor=white)](https://pypi.org/project/markdata/#files) [![code style](https://img.shields.io/badge/code%20style-black-%23000.svg)](https://black.readthedocs.io/en/stable/)
 
 **Markdata** is a Python library and command-line tool for managing data (e.g., code, diagrams, tables, etc.) in Markdown files. Its goal is to promote one simple rule: prose and non-prose supplements (collectively referred to as "data") should be managed separately whenever possible. The benefits of this philosophy include:
 
